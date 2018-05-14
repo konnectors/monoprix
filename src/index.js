@@ -10,7 +10,7 @@ const {
 const request = requestFactory({
   cheerio: true,
   //json: false,
-//  debug: true,
+  //  debug: true,
   jar: true
 })
 
@@ -21,12 +21,11 @@ const ordersUrl = baseUrl + '/jsp/account/accountOrders.jsp'
 module.exports = new BaseKonnector(start)
 
 async function start(fields) {
+  log('info', 'Starting')
   await authenticate(fields.login, fields.password)
+  log('info', 'Fetching orders')
   const $ = await request(ordersUrl)
-  console.log('end req')
-//  console.log($.html())
   const table = $('tr', 'table[class="table commandes-related"]')
-
 
   console.log(table.length)
   console.log(table.eq(4).html())
@@ -34,12 +33,8 @@ async function start(fields) {
     console.log('test ok')
   } else {
     throw new Error('LOGIN_FAILED')
+  }
 }
-
-//console.log($.html())
-
-}
-
 
 async function authenticate(username, password) {
   // Prefetching form and cookie jar
@@ -52,7 +47,7 @@ async function authenticate(username, password) {
   })
   // All occurency of this token are the same in html
   const dynSessConf = $('input[name="_dynSessConf"]').val()
-  console.log('Token _dynSessConf '+dynSessConf)
+  log('info', 'Token _dynSessConf ' + dynSessConf)
   await request({
     url: loginUrl,
     method: 'POST',
@@ -62,17 +57,14 @@ async function authenticate(username, password) {
     },
     form: {
       // Minimalized
-      '_dynSessConf': dynSessConf,
+      _dynSessConf: dynSessConf,
       '/atg/userprofiling/ProfileFormHandler.value.login': username,
       '_D:/atg/userprofiling/ProfileFormHandler.value.login': '',
       '/atg/userprofiling/ProfileFormHandler.value.password': password,
       '_D:/atg/userprofiling/ProfileFormHandler.value.password': '',
       '/atg/userprofiling/ProfileFormHandler.login': 'valider',
       '_D:/atg/userprofiling/ProfileFormHandler.login': '',
-      '_DARGS': '/jsp/account/loginPage.jsp.loginForm'
+      _DARGS: '/jsp/account/loginPage.jsp.loginForm'
     }
   })
-
-
-
 }
