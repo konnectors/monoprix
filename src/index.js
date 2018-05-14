@@ -4,12 +4,13 @@ const {
   signin,
   scrape,
   saveBills,
-  log
+  log,
+  errors
 } = require('cozy-konnector-libs')
 const request = requestFactory({
   cheerio: true,
   //json: false,
-  debug: true,
+//  debug: true,
   jar: true
 })
 
@@ -21,8 +22,21 @@ module.exports = new BaseKonnector(start)
 
 async function start(fields) {
   await authenticate(fields.login, fields.password)
-  $ = await request(ordersUrl)
-  console.log($.html())
+  const $ = await request(ordersUrl)
+  console.log('end req')
+//  console.log($.html())
+  const table = $('tr', 'table[class="table commandes-related"]')
+
+
+  console.log(table.length)
+  console.log(table.eq(4).html())
+  if (table.length > 5) {
+    console.log('test ok')
+  } else {
+    throw new Error('LOGIN_FAILED')
+}
+
+//console.log($.html())
 
 }
 
