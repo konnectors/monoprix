@@ -20,6 +20,7 @@ const ordersUrl = baseUrl + '/jsp/account/accountOrders.jsp'
 
 module.exports = new BaseKonnector(start)
 
+// This version is working from a 'home' IP but everything is blocked from OVH Ip
 async function start(fields) {
   log('info', 'Starting')
   await authenticate(fields.login, fields.password)
