@@ -1,12 +1,4 @@
-const {
-  BaseKonnector,
-  requestFactory,
-  signin,
-  scrape,
-  saveBills,
-  log,
-  errors
-} = require('cozy-konnector-libs')
+const { BaseKonnector, requestFactory, log } = require('cozy-konnector-libs')
 const request = requestFactory({
   cheerio: true,
   //json: false,
