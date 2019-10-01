@@ -20,11 +20,7 @@ async function start(fields) {
   const $ = await request(ordersUrl)
   const table = $('tr', 'table[class="table commandes-related"]')
 
-  console.log(table.length)
-  console.log(table.eq(4).html())
-  if (table.length > 5) {
-    console.log('test ok')
-  } else {
+  if (table.length <= 5) {
     throw new Error('LOGIN_FAILED')
   }
 }
