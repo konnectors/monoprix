@@ -8,7 +8,7 @@
   "source": "git://github.com/konnectors/monoprix.git",
   "editor": "Cozy",
   "vendor_link": "https://www.monoprix.fr",
-  "categories": ["other"],
+  "categories": ["others"],
   "fields": {
     "login": {
       "type": "email"
